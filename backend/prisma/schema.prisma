@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  walletAddress  String   @unique
+  fullName       String?
+  phoneNumber    String?
+  faceIdHash     String?
+  createdAt      DateTime @default(now())
+}
+
+model Transaction {
+  id         String   @id @default(uuid())
+  txHash     String   @unique
+  txType     String   // 'MINT', 'TRANSFER', 'CHECKIN'
+  fromWallet String?
+  toWallet   String?
+  amount     Int
+  timestamp  DateTime @default(now())
+}
